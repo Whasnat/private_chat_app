@@ -1,6 +1,11 @@
 package com.example.privatechat;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -54,5 +59,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         currentUser =  null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int optionId = item.getItemId();
+        switch (optionId){
+            case R.id.find_friends_options:
+                Toast.makeText(this, "Ha Ha You have no Friends.. Kill yourself", Toast.LENGTH_SHORT).show();
+
+            case R.id.settings_options:
+                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+
+            case R.id.logout_options:
+                mAuth.signOut();
+                sendUserToLoginActivity();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
