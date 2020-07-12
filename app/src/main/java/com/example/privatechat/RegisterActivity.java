@@ -1,8 +1,5 @@
 package com.example.privatechat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendUserToLoginPage();
+                sendUserTologinPage();
             }
         });
 
@@ -51,10 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void sendUserToLoginPage() {
-        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-    }
+
 
 
     //Create a new User Account With Email and Password
@@ -99,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            sendUserToLoginPage();
+                            sendUserToMainPage();
                             Toast.makeText(RegisterActivity.this, "Account Created Successful", Toast.LENGTH_SHORT).show();
                         }
                         else {
@@ -125,4 +123,17 @@ public class RegisterActivity extends AppCompatActivity {
         loginText = (TextView) findViewById(R.id.login_text);
         loadingBar = new ProgressDialog(this);
     }
+
+
+    private void sendUserTologinPage() {
+        Intent loginIntent = new Intent(RegisterActivity.this, MainActivity.class);
+        startActivity(loginIntent);
+    }
+
+    private void sendUserToMainPage() {
+        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+        startActivity(mainIntent);
+    }
+
+
 }
