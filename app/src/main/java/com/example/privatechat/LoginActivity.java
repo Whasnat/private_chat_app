@@ -1,8 +1,5 @@
 package com.example.privatechat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,11 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Button loginBtn, phoneLoginBtn;
     private EditText email, password;
-    private TextView registerText,forgotPassText;
+    private TextView registerText, forgotPassText;
     private FirebaseAuth mAuth;
 
     @Override
@@ -33,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        Log.d(TAG, "onCreate: Current User: "+ currentUser);
+        Log.d(TAG, "onCreate: Current User: " + currentUser);
 
         initialize();
 
@@ -70,9 +72,9 @@ public class LoginActivity extends AppCompatActivity {
                         currentUser = mAuth.getCurrentUser();
                         sendUserToMainActivity();
                     }
-                    else{
-                        String errMsg = task.getException().toString();
-                        Toast.makeText(LoginActivity.this, "Error !!"+ errMsg, Toast.LENGTH_SHORT).show();
+                    else {
+                        String errMsg = Objects.requireNonNull(task.getException()).toString();
+                        Toast.makeText(LoginActivity.this, "Error !!" + errMsg, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onComplete: error!!" + errMsg);
                     }
                 }
@@ -82,12 +84,12 @@ public class LoginActivity extends AppCompatActivity {
 
     //initialize the Components of activity_login.xml
     private void initialize() {
-        loginBtn = (Button) findViewById(R.id.login_btn);
-        phoneLoginBtn = (Button) findViewById(R.id.phone_login_btn);
-        email = (EditText) findViewById(R.id.email_field);
-        password = (EditText) findViewById(R.id.password_field);
-        registerText = (TextView) findViewById(R.id.register_text);
-        forgotPassText = (TextView) findViewById(R.id.forgot_pass_text);
+        loginBtn = findViewById(R.id.login_btn);
+        phoneLoginBtn = findViewById(R.id.phone_login_btn);
+        email = findViewById(R.id.email_field);
+        password = findViewById(R.id.password_field);
+        registerText = findViewById(R.id.register_text);
+        forgotPassText = findViewById(R.id.forgot_pass_text);
     }
 
     @Override
@@ -100,8 +102,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void sendUserToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
 
     }
 
