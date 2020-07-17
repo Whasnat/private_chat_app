@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -65,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -79,11 +80,16 @@ public class MainActivity extends AppCompatActivity {
         int optionId = item.getItemId();
         switch (optionId) {
             case R.id.find_friends_options:
-                Toast.makeText(this, "Ha Ha You have no Friends.. Kill yourself", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Ha Ha You have no Friends.. Kill yourself",
+                        Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.settings_options:
                 sendUserToSettingsActivity();
+                break;
+
+            case R.id.create_group_options:
+                newGroup();
                 break;
 
             case R.id.logout_options:
@@ -128,4 +134,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(loginIntent);
         finish();
     }
+
+
+    private void newGroup() {
+        AlertDialog.Builder alertDialogueBuilder = new AlertDialog.Builder(MainActivity.this);
+        alertDialogueBuilder.setTitle("Enter Group Name:");
+
+        final EditText groupNameField = new EditText(MainActivity.this);
+        groupNameField.setHint("e.g. Group Name");
+        alertDialogueBuilder.setView(groupNameField);
+    }
+
 }
