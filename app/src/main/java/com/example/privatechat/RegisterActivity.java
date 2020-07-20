@@ -64,10 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
         String userPass = regPassword.getText().toString();
         Log.d(TAG, "createNewUserAccount: password " + userPass);
 
-
         String userConfirmPass = confirmPass.getText().toString();
         Log.d(TAG, "createNewUserAccount: confirm password  " + confirmPass);
-
 
         if (TextUtils.isEmpty(userEmail)) {
             Log.d(TAG, "createNewUserAccount: no_Email!!!!!");
@@ -89,7 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
                 loadingBar.setMessage("Wait a bit, Asshole"); // replace Asshole with a good word
                 loadingBar.setCanceledOnTouchOutside(true);
                 loadingBar.show();
-
                 mAuth.createUserWithEmailAndPassword(userEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

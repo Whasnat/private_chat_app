@@ -1,7 +1,9 @@
 package com.example.privatechat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -13,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -143,6 +147,38 @@ public class MainActivity extends AppCompatActivity {
         final EditText groupNameField = new EditText(MainActivity.this);
         groupNameField.setHint("e.g. Group Name");
         alertDialogueBuilder.setView(groupNameField);
+
+        alertDialogueBuilder.setPositiveButton("create", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final String groupName = groupNameField.getText().toString();
+                if (TextUtils.isEmpty(groupName)) {
+                    Toast.makeText(MainActivity.this, "Please Enter Group Name", Toast.LENGTH_SHORT).show();
+                } else {
+                    createNewGroup(groupName);
+                }
+            }
+        });
+        alertDialogueBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialogueBuilder.show();
+
+    }
+
+    private void createNewGroup(final String groupName) {
+        rootRef.child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(MainActivity.this, groupName + " is created successfully :)", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(MainActivity.this, "Oops!! Something went Wrong.. Try again please...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
