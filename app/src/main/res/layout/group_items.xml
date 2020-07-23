@@ -8,23 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:background="#208C25"
         android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/groupItem_imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="5dp" />
 
         <TextView
             android:id="@+id/groupItem_nameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/groupItem_imageView"
             android:hint="Group Name"
             android:padding="10dp"
-            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
 

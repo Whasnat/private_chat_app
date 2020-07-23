@@ -1,4 +1,4 @@
-package com.example.privatechat;
+package com.example.privatechat.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.privatechat.fragments.ChatsFragment;
+import com.example.privatechat.fragments.ContactsFragment;
+import com.example.privatechat.fragments.GroupFragment;
+
 public class TabAccessorAdapter extends FragmentPagerAdapter {
+
     public TabAccessorAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }

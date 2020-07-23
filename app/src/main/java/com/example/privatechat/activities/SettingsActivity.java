@@ -1,4 +1,4 @@
-package com.example.privatechat;
+package com.example.privatechat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.privatechat.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private ImageView profileImage;
     private EditText username, status;
+    private TextView userNameTextView;
     private Button updateBtn;
     private FirebaseAuth mAuth;
     private DatabaseReference rootRef;
@@ -47,12 +50,23 @@ public class SettingsActivity extends AppCompatActivity {
 
         init();
 
-        // username.setVisibility(View.INVISIBLE);
+        userNameTextView.setVisibility(View.VISIBLE);
+        username.setVisibility(View.INVISIBLE);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateProfile();
+            }
+        });
+        //  userNameTextView.isClickable();
+        userNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userNameTextView.setVisibility(View.INVISIBLE);
+                username.setVisibility(View.VISIBLE);
+                username.callOnClick();
+
             }
         });
 
@@ -65,6 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         username = findViewById(R.id.username_field);
         status = findViewById(R.id.status_field);
         updateBtn = findViewById(R.id.update_profile_btn);
+        userNameTextView = findViewById(R.id.userName_textView);
     }
 
     private void updateProfile() {
@@ -102,13 +117,11 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name"))) {
                     final String displayName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
-                    username.setText(displayName);
+                    userNameTextView.setText(displayName);
+                } else {
+                    username.setVisibility(View.VISIBLE);
                 }
-//                else {
-//                    //  username.setVisibility(View.VISIBLE);
-//                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

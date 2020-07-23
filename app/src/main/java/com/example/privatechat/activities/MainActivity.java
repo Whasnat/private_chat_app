@@ -1,4 +1,4 @@
-package com.example.privatechat;
+package com.example.privatechat.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.privatechat.R;
+import com.example.privatechat.adapters.TabAccessorAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createNewGroup(final String groupName) {
-        rootRef.child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
+        rootRef.child("Users").child(currentUser.getUid()).child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful())
